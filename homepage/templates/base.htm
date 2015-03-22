@@ -1,0 +1,118 @@
+## this is the skeleton of all pages on in this app - it defines the basic html tags
+
+## set up a StaticRenderer object to enable the CSS/JS automatic inclusion magic.
+<%! from django_mako_plus.controller import static_files %>
+<%  static_renderer = static_files.StaticRenderer(self) %>
+
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    
+    <title>Colonial Heritage Foundation</title>
+    
+    ## add any site-wide scripts or CSS here; for example, jquery:
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="${ STATIC_URL }homepage/media/jquery.form.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
+    <script src="${ STATIC_URL }homepage/scripts/login.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
+
+    ## My stylesheets ##
+    <link rel="stylesheet" href="${ STATIC_URL }homepage/styles/zachBootstrap.css">
+    <link rel="shortcut icon" href="${ STATIC_URL }homepage/media/favicon.ico" type="image/x-icon" />
+
+    ## render the css with the same name as this page
+    ${ static_renderer.get_template_css(request, context)  }
+  
+  </head>
+
+
+
+
+  <body>
+      <header class="col-md-12">
+        <%block name="header">
+            <div class="jumbotron">
+                <h1>Colonial Heritage Foundation</h1>
+            </div>
+        <div class="modal fade bs-example-modal-sm" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content text-center block-center">
+                  ...
+                </div>
+            </div>
+        </div>
+        </%block>
+        </header>
+
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-2">
+                  <%block name="left">
+                      <ul class="nav nav-pills nav-stacked">
+                          <li role="presentation"><a href="/homepage/"><span class="glyphicon glyphicon-home"></span> Home </a></li>
+                          <li role="presentation"><a href="/homepage/about"><i class="fa fa-plus-circle"></i> About Us</a></li>
+                          <li role="presentation"><a href="/homepage/contact"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                          <li role="presentation"><a href="/homepage/terms"><i class="fa fa-file-text-o"></i> Terms </a></li>
+                          <li role="presentation"><a href="/homepage/products"><i class="fa fa-tag"></i> Products </a></li>
+                          <li role="presentation"><a href="/homepage/cart"><i class="fa fa-shopping-cart"></i> Shopping Cart </a></li>
+                          <li role="presentation"><a href="/homepage/checkout"><i class="fa fa-shopping-cart"></i> Checkout </a></li>
+                          %if user and user.is_anonymous():
+                          <li role="presentation"><a href="#" id="showLoginModal" data-toggle="modal" data-target="#loginModal"><span class="fa fa-sign-in"></span> Login </a></li>
+                          <li role="presentation"><a href="signup.create"><span class="fa fa-user-plus"></span> Sign Up </a></li>
+                          %else:
+                              <li role="presentation"><a href="/homepage/myaccount/${user.id}"><i class="fa fa-user"></i> My Account </a></li>
+                              <li role="presentation"><a href="/homepage/logout"><span class="fa fa-sign-out"></span> Logout </a></li>
+                          %endif
+                          %if user and not user.is_anonymous() and user.is_superuser is True:
+                          <li role="presentation">Admin Options</li>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li role="presentation"><a href="users"><i class="fa fa-users"></i> Users </a></li>
+                                <li role="presentation"><a href="photograph"><i class="fa fa-picture-o"></i> Photos </a></li>
+                                <li role="presentation"><a href="events"><i class="fa fa-calendar-o"></i> Events </a></li>
+                                <li role="presentation"><a href="publicevents"><i class="fa fa-calendar-o"></i> Public Events </a></li>
+                            </ul>
+                          %endif
+                      </ul>
+                  </%block>
+              </div>
+
+
+              <div class="col-md-8">
+                  <%block name="content">
+                      Site content goes here in sub-templates.
+                  </%block>
+              </div>
+
+              <div class="col-md-2">
+                  <%block name="right">
+                      <!-- This right side has no template, but may be overwritten by using the right block on a page -->
+                  </%block>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-2">
+                    <p></p>
+              </div>
+              <footer class="col-md-8 text-center center-block">
+                  <%block name="footer">
+                      <p class="text-center"><br/><br/><i class="fa fa-copyright"></i>&nbsp;Zach Trayner | Colonial Heritage Foundation</p>
+                  </%block>
+              </footer>
+              <div class="col-md-2">
+                  <p></p>
+              </div>
+          </div>
+
+
+
+    ## render the JS with the same name as this page
+    ${ static_renderer.get_template_js(request, context)  }
+    </div>
+  </body>
+</html>

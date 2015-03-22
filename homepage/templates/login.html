@@ -1,0 +1,22 @@
+<%inherit file="base.htm" />
+
+<%block name="content">
+
+    <div class="col-8">
+        %if user and user.is_anonymous():
+            <btn class="btn btn-default btn-lrg" id="showLoginModal" data-toggle="modal" data-target="#loginModal"><span class="fa fa-sign-in"></span> Login </btn>
+            <div class="modal fade bs-example-modal-sm" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content text-center block-center">
+                    ...
+                    </div>
+                </div>
+            </div>
+        %else:
+            <h3>You're already logged in!</h3>
+        %endif
+    </div>
+
+</%block>
+
+

@@ -1,0 +1,29 @@
+<%inherit file="base.htm" />
+
+<%doc>
+<%block name="header">
+    This block will override template if uncommented
+</%block>
+</%doc>
+
+<%doc>
+<%block name="left">
+    This block will override template if uncommented
+</%block>
+</%doc>
+
+<%block name="content">
+    %if user and not user.is_anonymous():
+        <h3>Hello ${ user.first_name }, welcome back</h3>
+    %else:
+        <h3 class="">Welcome to the Colonial Heritage Foundation</h3>
+        <a class="btn btn-primary" href="about" role="button">Click to learn more</a>
+    %endif
+
+</%block>
+
+<%doc>
+<%block name="footer">
+    This block will override template if uncommented
+</%block>
+</%doc>

@@ -1,0 +1,27 @@
+<%inherit file="base.htm" />
+
+<%block name="content">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Event ID</td>
+            <td>Actions</td>
+        </tr>
+        %if publicevents:
+            %for event in publicevents:
+                <tr>
+                    <td>${ event.id }</td>
+                    <td>${ event.name }</td>
+                    <td>${ event.description }</td>
+                    <td>${ event.event_id }</td>
+                    <td><a href="/homepage/publicevents.edit/${ event.id }">Edit</a> | <a href="/homepage/publicevents.delete/${ event.id }">Delete</a></td>
+                </tr>
+            %endfor
+        %endif
+    </table>
+    <div class = "text-right">
+        <a href="/homepage/publicevents.create" class="btn btn-success"><i class="fa fa-calendar-o"></i> Create New Public Event</a>
+    </div>
+</%block>

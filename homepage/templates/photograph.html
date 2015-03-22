@@ -1,0 +1,25 @@
+<%inherit file="base.htm" />
+
+<%block name="content">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>ID</td>
+            <td>Date Taken</td>
+            <td>Place Taken</td>
+            <td>Photographer
+            <td>Actions</td>
+        </tr>
+        %for photograph in photographs:
+            <tr>
+                <td>${ photograph.id }</td>
+                <td>${ photograph.dateTaken }</td>
+                <td>${ photograph.placeTaken }</td>
+                <td>${ photograph.photographer.first_name + ' ' + photograph.photographer.last_name }</td>
+                <td><a href="/homepage/photograph.edit/${ photograph.id }/">Edit</a> | <a href="/homepage/users.delete/${ photograph.id }">Delete</a></td>
+            </tr>
+        %endfor
+    </table>
+    <div class = "text-right">
+        <a href="/homepage/photograph.create" class="btn btn-success"><i class="fa fa-user-plus"></i> Create New Photo</a>
+    </div>
+</%block>

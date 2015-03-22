@@ -1,0 +1,48 @@
+<%inherit file="base.htm" />
+
+<%doc>
+<%block name="header">
+    This block will override template if uncommented
+</%block>
+</%doc>
+
+<%doc>
+<%block name="left">
+    This block will override template if uncommented
+</%block>
+</%doc>
+
+<%block name="content">
+    %if products:
+        <div class="container">
+            <div class="row">
+                %for product in products:
+                            <div class="col-xs-18 col-sm-4 col-md-3">
+                                <div class="productbox">
+                                    <div class="imgthumb img-responsive">
+                                        <img src="${ STATIC_URL }homepage/media/products/${ product.pictureFileName }">
+                                    </div>
+                                    <div class="caption">
+                                        <h5>${ product.name }<br/>&#36;${ product.unitPrice }</h5>
+                                        %if user and user.is_superuser is True:
+                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>
+                                        %endif
+                                        <a href="#" class="btn btn-warning btn-xs add_to_cart" data-pid="${ product.id }" role="button">Add to Cart</a>
+                                        <a href="/homepage/products.viewDetails/${ product.id }" class="btn btn-default btn-xs" role="button">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                %endfor
+            </div>
+        </div>
+    %else:
+        <p>There are no products to show</p>
+    %endif
+
+</%block>
+
+<%doc>
+<%block name="footer">
+    This block will override template if uncommented
+</%block>
+</%doc>
